@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="JavaScript 30 day Challenge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavsScript 30: JS + CSS clock</title>
+  <link href="custom.css" rel="stylesheet">
+</head>
+
+
+<body>
+    <div class="clock">
+      <span class="time twelve">12</span>
+      <span class="time three">3</span>
+      <span class="time six">6</span>
+      <span class="time nine">9</span>
+
+      <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
+    </div>
+  </div>
+
+
+  <style>
+    html {
+      background: #29315A url(https://static.pexels.com/photos/27993/pexels-photo-27993.jpg) no-repeat;
+      background-size:cover;
+      font-family:'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+    body {
+      margin: 0;
+      font-size: 2rem;
+      min-height: 100vh;
+      align-items: center;
+    }
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border:20px solid white;
+      border-radius:50%;
+      margin: 7% 27%;
+      position: relative;
+      padding:2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .time {
+      position: absolute;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .twelve {
+      top: -6%;
+      left: 46%;
+    }
+
+    .three {
+      top: 46%;
+      right: -5%;
+    }
+
+    .six {
+      bottom: -7%;
+      left: 49%;
+    }
+
+    .nine {
+      left: -5%;
+      top: 46%;
+    }
+
+    .hand {
+      width:50%;
+      height:6px;
+      background:black;
+      position: absolute;
+      top:50%;
+      transform-origin: 100%; /* alter the focus point around which an element rotates (default - 50%) */
+      transform: rotate(90deg); /* position all .hand vertically */
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+     }
+
+     .min-hand {
+      background: yellow;
+     }
+
+     .second-hand {
+      background: orange;
+     }
+  </style>
+
+  <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    function setDate() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+
+      // turn time into degrees
+      const secondsDegrees = ((seconds / 60) * 360) + 90; // plus 90 to offset default 90 degrees
+
+      const minutesDegrees = ((minutes / 60) * 360) + 90;
+       const hoursDegrees = ((hours / 12) * 360) + 90;
+
+
+
+      // apply styles using ES6 template literal:
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+    }
+
+    setInterval(setDate, 1000);
+     setDate();
+  </script>
+</body>
+</html>
