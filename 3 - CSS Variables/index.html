@@ -65,7 +65,6 @@
   	function handleUpdate() {
   		const suffix = this.dataset.sizing || ''; // returns object with all data- attributes. Grab data-sizing or nothing (for color)
   		document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
-  		
   	}
 
   	inputs.forEach(input => input.addEventListener('change', handleUpdate));
