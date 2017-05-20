@@ -4,6 +4,90 @@
   <meta charset="utf-8">
   <meta name="description" content="JavaScript 30 day Challenge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JavsScript 30</title>
+  <title>JavsScript 30: Copy vs Reference</title>
 </head>
 <body>
+
+  <script>
+    // start with strings, numbers and booleans
+    let age = 100;
+    let age2 = age;
+    console.log(age, age2) 
+    // => 100, 100
+    age = 200; 
+	console.log(age, age2)
+	 // => 200, 100
+
+    // Let's say we have an array
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // and we want to make a copy of it.
+    const team = players;
+    // team is a REFERENCE to original array
+    console.log(players, team);
+
+    // You might think we can just do something like this:
+
+
+    // however what happens when we update that array?
+    team[3] = 'Lux';
+    // both arrays change
+
+    // now here is the problem!
+    // oh no - we have edited the original array too!
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+    // So, how do we fix this? We take a copy instead!
+    // one way
+
+    const team2 = players.slice();
+
+    // or create a new array and concat the old one in
+
+    const team3 = [].concat(players);
+
+    // or use the new ES6 Spread
+
+    const team4 = [...players];
+
+    // now when we update it, the original one isn't changed
+
+    team4[3] = 'test';
+    // original array stays untuched
+
+    const team5 = Array.from(players);
+
+    // The same thing goes for objects, let's say we have a person object
+    // with Objects
+
+    const person = {
+    	name: 'Olga',
+    	age: 30
+    };
+
+    const captain = person;
+    captain.number = 99;
+    // made a reference not a copy ! original object changes
+
+
+    // and think we make a copy:
+
+    // how do we take a copy instead?
+    const futureOlga = Object.assign({}, person, {age: 31});
+    console.log(person, futureOlga);
+    // only captain2 is changed
+
+    // We will hopefully soon see the object ...spread
+
+    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+
+
+    // Another option:
+    const dev = JSON.parse(JSON.stringify(person));
+    dev.name = "Helga";
+    // original object doesn't change
+
+    // Check possible performance issues
+  </script>
+
+</body>
+</html>

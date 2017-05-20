@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Learn Letters, Earn Unicorns and Rainbows!">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn letters</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Delius+Unicase:700" rel="stylesheet">
+
+  <style>
+      .game-field {
+        border: 1px solid green;
+        height: 600px;
+        width: 600px;
+        margin: 0 auto;
+      }
+
+      .letter-field {
+        text-align: center;
+        margin: 0;
+        font-size: 260px;
+        font-family: 'Delius Unicase', cursive;
+      }
+
+  </style>
+</head>
+<body>
+
+  <div class="game-field">
+    <p class="letter-field"></p>
+    <div class="answer-field"></div>
+  </div>
+  <script>
+
+  // Goal: teach preschool kids English letters in a relaxing and fun way
+  // Solution. V 1.0
+  // -show random letter on a screen + 
+  // -check if user presses correct letter on keyboard
+  // -show unicorn if correct / show sad face if not
+  // Nice-to-haves: play background music, turn on letter sound if correct answer
+
+
+  // Solution V 2.0
+  // -Show pictures of random objects with obvious name
+  // -User should press the first letter of this word
+  // -show unicorn if correct / show sad face if not
+  // Nice-to-haves: display whole word if correct answer
+
+
+  // VARIABLES 
+  const documentBody = document.querySelector("body");
+  const gameField = document.querySelector('.game-field');
+  const letterField = document.querySelector('.letter-field');
+  const answerField = document.querySelector('.answer-field');
+  const letters = String.fromCharCode(...Array(91).keys()).slice(65);
+
+
+  // FUNCTIONS
+  function randomColor() {
+      return 'hsl(' + Math.floor(360 * Math.random()) + ', 100%, 50%)';
+  }
+
+
+
+  function showLetter() {
+
+    // calculate random index
+    const letterIndex =  Math.floor(Math.random() * 26);
+
+    // add a random letter to DOM
+    letterField.innerHTML = letters[letterIndex];
+
+     // apply a random color to a letter
+    letterField.style.color = randomColor();
+  }
+
+
+
+
+   function checkAnswer(e) {
+
+    // convert pressed key code to character
+    const pressedChar = String.fromCharCode(e.keyCode);
+
+    // compare pressed character and letter
+    if (letterField.innerText === pressedChar) {
+      cornify_add();
+
+      // get rid of default image count
+      documentBody.removeChild(document.getElementById('cornifycount'));
+
+      // start anew
+      setTimeout(function() { showLetter(); }, 3000);
+    } else {
+      var myImage = document.createElement("img");
+      myImage.setAttribute(src, 'sad_face.jpg');
+      documentBody.appendChild(myImage);
+    }
+   }
+
+
+  // EVENT LISTENERS
+  window.addEventListener('load', showLetter);
+  window.addEventListener('keyup', checkAnswer);
+
+  </script>
+</body>
+</html>
