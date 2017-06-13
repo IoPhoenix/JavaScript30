@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>👀👀👀Follow Along Nav</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="description" content="JavaScript 30 day Challenge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavsScript 30: Link Highlighter</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 <body>
 
@@ -28,9 +31,26 @@
   <script>
     const triggers = document.querySelectorAll('a');
     const highlight = document.createElement('span');
+    highlight.classList.add('highlight');
+    document.body.appendChild(highlight);
 
     function highlightLink() {
-      console.log('Highlight!');
+      // how big is the element we hovered?
+      // where on the page is it?
+
+      //Element.getBoundingClientRect() method returns the size of an element and its position relative to the viewport
+      const linkCoords = this.getBoundingClientRect();
+
+      const coords = {
+        width: linkCoords.width,
+        height: linkCoords.height,
+        top: linkCoords.top + window.scrollY,
+        left: linkCoords.left + window.scrollX
+      }
+
+      highlight.style.width = `${coords.width}px`;
+      highlight.style.height = `${coords.height}px`;
+      highlight.style.transform = `translate(${coords.left}px, ${linkCoords.top}px`;
     }
 
     triggers.forEach(a => a.addEventListener('mouseenter', highlightLink));
