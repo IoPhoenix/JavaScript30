@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Speed Scrubber</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="wrapper">
+
+  <!-- video src taken from Javascript30 website -->
+  	<video class="flex" width="765" height="430" src="https://player.vimeo.com/external/194158897.hd.mp4?s=ddae6b33fe0f972ea4dc82251925c612affc1720&amp;profile_id=119&amp;oauth2_token_id=901465035" frameborder="0" allowfullscreen loop controls></video>
+   
+    <div class="speed">
+      <div class="speed-bar">1×</div>
+    </div>
+  </div>
+
+<script>
+	const speed = document.querySelector('.speed');
+	const bar = speed.querySelector('.speed-bar');
+	const video = document.querySelector('.flex');
+
+	speed.addEventListener('mousemove', function(e) {
+		// get height of speed bar
+		const y = e.pageY - this.offsetTop;
+		const percent = y / this.offsetHeight;
+		const min = 0.4;
+		const max = 4;
+		const height = Math.round(percent * 100) + '%';
+		const playbackRate = percent * (max - min) + min;
+		bar.style.height = height;
+		bar.textContent = playbackRate.toFixed(2) + 'x';
+		video.playbackRate = playbackRate;
+	});
+
+</script>
+</body>
+</html>
